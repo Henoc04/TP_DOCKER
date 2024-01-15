@@ -2,10 +2,6 @@ name: Workflow1
 
 on : 
   [push]
-  #workflow_dispatch
-  #push:
-   # tags:
-    # - 'V*'
 jobs:
   build:
     runs-on: ubuntu-latest

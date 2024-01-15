@@ -1,0 +1,50 @@
+name: workflow_2
+
+on : 
+  [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2  # Récupère le code du dépôt
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'  # Version Python à utiliser
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirement.txt  
+      - name: Execution script.py 
+        run: |
+          python script.py
+         
+
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      
+        - uses: actions/checkout@v2
+      
+        - name: Set up Docker Buildx
+          uses: docker/setup-buildx-action@v1
+    
+        - name: Login to Docker Hub
+          uses: docker/login-action@v1
+          with:
+            username: "yaohenoc"
+            password: "dckr_pat_1g7L3j1JG3q9Mi8UJSOGhCIFwmk"
+     
+        - name: Build and push Docker image
+          uses: docker/build-push-action@v2
+          with:
+            context: .
+            file: Dockerfile
+            push: true
+            tags: yaohenoc/tp_docker:v2
