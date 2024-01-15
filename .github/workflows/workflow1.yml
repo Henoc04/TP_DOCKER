@@ -25,5 +25,4 @@ jobs:
           python -m pip install -r requirements.txt 
       - name: Execution de script.py
         run: |
-          py script.py
-          
+          python script.py
